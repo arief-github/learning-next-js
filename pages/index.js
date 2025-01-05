@@ -20,7 +20,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1> Custom Babel and Webpack Configuration Example </h1>
+        <h1> This is Home Page </h1>
 
         <div className={styles.card}>
           Your lucky number is: {randomNumber} <br />
