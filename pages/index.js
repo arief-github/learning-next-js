@@ -1,41 +1,28 @@
-import { useEffect, useState } from 'react';
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import Link from 'next/link';
+import axios from 'axios';
 
-export default function Home() {
-  const [randomNumber, setRandomNumber] = useState(null);
+export async function getServerSideProps() {
+  const { data } = await axios.get(`https://dummyjson.com/users`);
 
-  useEffect(() => {
-    // prettier-ignore
-    const number = Math.floor(Math.random() * 10) + 1;
+  return {
+    props: {
+      users: data.users,
+    },
+  };
+}
 
-    setRandomNumber(number);
-  }, []);
-
+function HomePage({ users }) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Custom Babel and Webpack Configuration</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1> Custom Babel and Webpack Configuration Example </h1>
-
-        <div className={styles.card}>
-          Your lucky number is: {randomNumber} <br />
-          Refresh the page for a different lucky number.
-        </div>
-
-        <div className={styles.description}>
-          Lucky number has been generated <b>client side</b> using the{' '}
-          <b>experimental pipeline operator</b> and its Babel plugin! <br />
-          Open the <code>.babelrc</code> to see how to add more experimental features to your
-          Next.js app.
-        </div>
-      </main>
-
-      <footer className={styles.footer}>Real World Next.js</footer>
-    </div>
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>
+          <Link href={`/users/${user.username}`} passHref>
+            <a> {user.username} </a>
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }
+
+export default HomePage;
