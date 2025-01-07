@@ -16,7 +16,7 @@ function HomePage({ users }) {
     <ul>
       {users.map((user) => (
         <li key={user.id}>
-          <Link href={`/users/${user.username}`} passHref>
+          <Link href={`/users/${user.id}`} passHref>
             <a> {user.username} </a>
           </Link>
         </li>
